@@ -28,6 +28,25 @@ module.exports = app => {
         
     })
 
+    app.get('/restrictedNo', (req,res) => {
+        if (req.session.loggedin) {
+            connection.query("SELECT * FROM usuarios", (err, result) => {
+                if(err){
+                    res.send(err);
+                } else {
+                    res.render("../views/list.ejs", {
+                        usuarios: result,
+                        login: true,
+                        name: req.session.name
+                    });
+                }
+            })
+        } else {
+            res.render('../views/login.ejs');
+        }
+        
+    })
+
     app.get("/delete/:id", (req,res) => {
         const id = req.params.id;
         connection.query("DELETE FROM usuarios WHERE id = ?", [id], (err, result) => {
@@ -39,11 +58,6 @@ module.exports = app => {
                         res.send(err);
                     } else {
                         res.redirect("/dashboard");
-                        /* res.render("../views/dashboard.ejs", {
-                            usuarios: result,
-                            login: true,
-                            name: req.session.name
-                        }); */
                     }
                 })
             }
@@ -52,9 +66,9 @@ module.exports = app => {
 
     app.post("/edit/:id", (req,res) => {
         const id = req.params.id;
-        const {nameComplete} = req.body
+        const {nameComplete, email} = req.body
         console.log(req.body);
-        connection.query("UPDATE usuarios SET nameComplete = ? WHERE id = ?", [nameComplete, id], (err, result) => {
+        connection.query("UPDATE usuarios SET nameComplete = ?, email = ? WHERE id = ?", [nameComplete, email, id], (err, result) => {
             if(err){
                 res.send(err);
             } else {
@@ -105,18 +119,7 @@ module.exports = app => {
                     if(err){
                         res.send(err);
                     } else {
-                        res.render('../views/dashboard.ejs', {
-                            alert: true,
-                            alertTitle: "Registro",
-                            alertMessage: "Registro exitoso",
-                            alertIcon: "success",
-                            showConfirmButton: false,
-                            timer: 1500,
-                            ruta: '',
-                            usuarios: result,
-                            login: true,
-                            name: req.session.name,
-                        })
+                        res.redirect("/dashboard");
                     }
                 })
             }

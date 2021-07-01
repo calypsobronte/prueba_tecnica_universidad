@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de no restringuidos</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a href="dashboard" class="navbar-brand mx-auto">Bashboard Jairo S.A</a>
+        <% if (login) {%>
+            <h4 class="text-white"><%= name %> &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+            <a href="/dashboard" class="btn btn-secondary"> Volver </a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/logout" class="btn btn-secondary"> Cerrar sesion</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <%}%>
+    </nav>
+    
+    <div class="row">
+        <div class="col-md-6 mt-4 text-center">
+            <h3 class="card-title">Listado de usuarios no restringuidos</h3>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Correo electronico</th>
+                    <th>Usuario o nickname</th>
+                    <th>Fecha de creacion</th>
+                </tr>
+                <% for (let i = 0; i < usuarios.length; i++) { %>
+                    <tr>
+                        <% if (usuarios[i].restricted !== "1") { %>
+                            <th><%= usuarios[i].id %></th>
+                            <th><%= usuarios[i].nameComplete %></th>
+                            <th><%= usuarios[i].email %></th>
+                            <th><%= usuarios[i].user %></th>
+                            <th><%= usuarios[i].date_create %></th>
+                        <% } %>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>
