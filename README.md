@@ -28,9 +28,9 @@ $ yarn dev o npm dev
 3. Crear carpeta `env` y crear archivo `.env` añadir lo siguiente:
 ```bash
 DB_HOST = localhost
-DB_USER = root
-DB_PASSWORD = password
-DB_DATABASE = jairosa
+DB_USER = user_database
+DB_PASSWORD = password_database
+DB_DATABASE = db_database
 ```
 
 ## Autores
